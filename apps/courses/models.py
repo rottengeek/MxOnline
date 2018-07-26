@@ -15,7 +15,7 @@ class Course(models.Model):
     desc = models.CharField(max_length=300, verbose_name="课程描述")
     # TextField允许我们不输入长度。可以输入到无限大。暂时定义为TextFiled，之后更新为富文本
     detail = models.TextField(verbose_name="课程详情")
-    degree = models.CharField(choices=DEGREE_CHOICES, max_length=2)
+    degree = models.CharField(choices=DEGREE_CHOICES, max_length=2, verbose_name='难度')
     # 使用分钟做后台记录(存储最小单位)前台转换
     learn_times = models.IntegerField(default=0, verbose_name="学习时长(分钟数)")
     # 保存学习人数:点击开始学习才算
@@ -33,6 +33,8 @@ class Course(models.Model):
         verbose_name = "课程"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
 
 # 章节
 class Lesson(models.Model):
@@ -46,6 +48,8 @@ class Lesson(models.Model):
         verbose_name = "章节"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
 
 # 每章视频
 class Video(models.Model):
@@ -59,6 +63,8 @@ class Video(models.Model):
         verbose_name = "视频"
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.name
 
 # 课程资源
 class CourseResource(models.Model):
@@ -77,3 +83,6 @@ class CourseResource(models.Model):
     class Meta:
         verbose_name = "课程资源"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
