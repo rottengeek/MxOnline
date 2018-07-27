@@ -30,6 +30,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+# 设置邮箱和用户名均可登录
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -44,6 +49,7 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
+    'captcha',
 ]
 
 # 此处重载是为了使我们的UserProfile生效
@@ -129,3 +135,18 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
+#邮件发送
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.163.com'
+EMAIL_PORT=25
+#发送邮件的邮箱
+EMAIL_HOST_USER='clementdai@163.com'
+#邮箱的授权密码
+EMAIL_HOST_PASSWORD='a12345678'
+#收件人看到的发件人
+EMAIL_FROM='DAI<clementdai@163.com>'
