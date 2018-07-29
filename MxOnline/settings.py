@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    'pure_pagination',
 ]
 
 # 此处重载是为了使我们的UserProfile生效
@@ -79,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -150,3 +152,6 @@ EMAIL_HOST_USER='clementdai@163.com'
 EMAIL_HOST_PASSWORD='a12345678'
 #收件人看到的发件人
 EMAIL_FROM='DAI<clementdai@163.com>'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -2,7 +2,6 @@ from datetime import datetime
 
 from django.db import models
 
-
 # Create your models here.
 
 
@@ -25,16 +24,21 @@ class CourseOrg(models.Model):
     name = models.CharField(max_length=50, verbose_name="机构名称")
     # 机构描述，后面会替换为富文本展示
     desc = models.TextField(verbose_name="机构描述")
+    category = models.CharField(default='pxjg',max_length=20, choices=(('pxjg',''),('gr','个人'),('gx','高校')), verbose_name='机构类型')
     click_nums = models.IntegerField(default=0, verbose_name="点击数")
     fav_nums = models.IntegerField(default=0, verbose_name="收藏数")
     image = models.ImageField(
         upload_to="org/%Y/%m",
-        verbose_name="封面图",
+        verbose_name="机构logo",
         max_length=100)
     address = models.CharField(max_length=150, verbose_name="机构地址")
     # 一个城市可以有很多课程机构，通过将city设置外键，变成课程机构的一个字段
     # 可以让我们通过机构找到城市
     city = models.ForeignKey(CityDict, verbose_name="所在城市", on_delete=models.CASCADE)
+    # 学习人数
+    students = models.IntegerField(default=0, verbose_name='学习人数')
+    # 课程数
+    course_nums = models.IntegerField(default=0, verbose_name='课程数')
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
     class Meta:
@@ -55,6 +59,10 @@ class Teacher(models.Model):
     points = models.CharField(max_length=50, verbose_name="教学特点")
     click_nums = models.IntegerField(default=0, verbose_name="点击数")
     fav_nums = models.IntegerField(default=0, verbose_name="收藏数")
+    image = models.ImageField(default='',
+        upload_to="teacher/%Y/%m",
+        verbose_name="头像",
+        max_length=100)
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
     class Meta:

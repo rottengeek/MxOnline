@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from django.db import models
+from organization.models import CourseOrg
 
 
 # Create your models here.
@@ -11,6 +13,7 @@ class Course(models.Model):
         ("zj", "中级"),
         ("gj", "高级")
     )
+    course_org = models.ForeignKey(CourseOrg, verbose_name='课程机构', on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=50, verbose_name="课程名")
     desc = models.CharField(max_length=300, verbose_name="课程描述")
     # TextField允许我们不输入长度。可以输入到无限大。暂时定义为TextFiled，之后更新为富文本
