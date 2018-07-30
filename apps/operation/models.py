@@ -88,3 +88,7 @@ class UserCourse(models.Model):
     class Meta:
         verbose_name = "用户课程"
         verbose_name_plural = verbose_name
+
+
+    def __str__(self):
+        return "[{0}]的课程: {1}".format(self.user.username, self.course.name)

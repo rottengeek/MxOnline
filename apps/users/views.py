@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
+from django.http import HttpResponseRedirect
 
 from .models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm
@@ -83,7 +84,10 @@ class RegisterView(View):
 
 class LoginView(View):
     def get(self, request):
-        return render(request, "login.html", {})
+        # 获取到next参数，渲染到template中，在form表单添加一个hidden类型的元素
+        redirect_url = request.GET.get('next', '')
+        print(redirect_url)
+        return render(request, "login.html", {'redirect_url': redirect_url})
 
     def post(self, request):
         login_form = LoginForm(request.POST)
@@ -95,7 +99,12 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'index.html')
+                    redirect_url = request.POST.get('next', '')
+                    print('sssssssss', redirect_url)
+                    if redirect_url:
+                        return HttpResponseRedirect(redirect_url)
+                        # 跳转到首页 user request会被带回到首页
+                    return HttpResponseRedirect(reverse("index"))
                 else:
                     return render(request, 'login.html', {'msg': '用户未激活'})
             else:
