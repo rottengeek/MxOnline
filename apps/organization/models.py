@@ -24,7 +24,8 @@ class CourseOrg(models.Model):
     name = models.CharField(max_length=50, verbose_name="机构名称")
     # 机构描述，后面会替换为富文本展示
     desc = models.TextField(verbose_name="机构描述")
-    category = models.CharField(default='pxjg',max_length=20, choices=(('pxjg',''),('gr','个人'),('gx','高校')), verbose_name='机构类型')
+    tag = models.CharField(max_length=10, default="国内名校", verbose_name="机构标签")
+    category = models.CharField(default='pxjg',max_length=20, choices=(('pxjg','培训机构'),('gr','个人'),('gx','高校')), verbose_name='机构类型')
     click_nums = models.IntegerField(default=0, verbose_name="点击数")
     fav_nums = models.IntegerField(default=0, verbose_name="收藏数")
     image = models.ImageField(

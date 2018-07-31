@@ -20,15 +20,17 @@ import xadmin
 
 from django.views.static import serve
 
-from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView
+from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, LogoutView, IndexView
 
-from MxOnline.settings import MEDIA_ROOT
+from MxOnline.settings import MEDIA_ROOT,STATIC_ROOT
+    #
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
-    path('',  TemplateView.as_view(template_name='index.html'),name='index'),
+    path('', IndexView.as_view(), name="index"),
     path('login/', LoginView.as_view(), name="login"),
+    path('logout/', LogoutView.as_view(), name="logout"),
     path('register/', RegisterView.as_view(), name="register"),
     path('captcha/', include('captcha.urls')),
     re_path('active/(?P<active_code>.*)/', ActiveUserView.as_view(), name='user_active'),
@@ -46,9 +48,14 @@ urlpatterns = [
     # 课程app的url配置
     path("course/", include('courses.urls', namespace="course")),
 
-
+    # 课程app的url配置
+    path("users/", include('users.urls', namespace="users")),
 
     # 配置上传文件的访问处理函数
-    re_path('media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT }),
+    re_path('media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
+
+    re_path('static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT}),
 ]
 
+# 全局404页面配置
+# handler404 = 'users.views.page_not_found'

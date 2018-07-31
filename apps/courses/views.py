@@ -1,6 +1,7 @@
 import json
 
 from django.shortcuts import render
+from django.db.models import Q
 from django.views.generic.base import View
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -18,6 +19,13 @@ class CourseListView(View):
         all_course = Course.objects.all().order_by('-add_time')
 
         hot_courses = Course.objects.all().order_by('-fav_nums')[:3]
+
+        # 搜索功能
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            # 在name字段进行操作,做like语句的操作。i代表不区分大小写
+            # or操作使用Q
+            all_course = all_course.filter(Q(name__icontains=search_keywords) | Q( desc__icontains=search_keywords) | Q(detail__icontains=search_keywords))
 
         # 课程排序
         sort = request.GET.get('sort', "")
@@ -53,6 +61,7 @@ class CourseDetailView(View):
         # 增加课程点击数
         course.click_nums += 1
         course.save()
+
 
         # 是否收藏课程
         has_fav_course = False
@@ -205,3 +214,6 @@ class VideoPlayView(LoginRequiredMixin, View):
             "relate_courses": relate_courses,
             "video": video,
         })
+
+
+
