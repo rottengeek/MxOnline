@@ -1,9 +1,3 @@
-# encoding: utf-8
-__author__ = 'mtianyan'
-__date__ = '2018/1/15 0015 08:11'
-
-
-
 import xadmin
 from xadmin.views import BaseAdminPlugin, CreateAdminView, ModelFormAdminView, UpdateAdminView
 from DjangoUeditor.models import UEditorField

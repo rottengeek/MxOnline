@@ -1,5 +1,5 @@
 import xadmin
-
+from xadmin.plugins.auth import UserAdmin
 from xadmin import views
 from .models import EmailVerifyRecord, Banner
 
@@ -26,6 +26,7 @@ class EmailVerifyRecordAdmin(object):
     search_fields = ['code', 'email', 'send_type']
     # 配置筛选字段
     list_filter = ['code', 'email', 'send_type', 'send_time']
+    model_icon = 'fa fa-archive'
 
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 
